@@ -1,2 +1,9 @@
 //FLy way is a version control for database
-//Keep version and timestamps of database query
+//Keep versions and timestamps of database query e.g SQL-FILE-"Human"
+//Query --> ALTER TABLE ENTRY -- ETC.
+//Think of it as a Git/Github for your query
+//Documentation: https://documentation.red-gate.com/fd/getting-started-with-flyway-184127223.html
+//Guide: https://stackoverflow.com/questions/57551735/how-to-edit-the-existing-sql-file-in-flyway
+//With Love Emmanuel :D
+
+
