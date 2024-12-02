@@ -2,7 +2,7 @@ package edu.northwestu.intc3283.datasourcestarter.repository;
 
 import edu.northwestu.intc3283.datasourcestarter.config.DatabaseTestContextConfiguration;
 import edu.northwestu.intc3283.datasourcestarter.config.jdbc.CustomJdbcConfiguration;
-import edu.northwestu.intc3283.datasourcestarter.entity.Donor;
+import edu.northwestu.intc3283.datasourcestarter.entity.Entry;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,72 +20,48 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ContextConfiguration(initializers = DatabaseTestContextConfiguration.class)
 @Import(CustomJdbcConfiguration.class)
-class DonorRepositoryTest {
+class EntryRepositoryTest {
 
     @Autowired
-    private DonorsRepository donorsRepository;
+    private EntryRepository entryRepository;
 
     @Test
     public void canSave() {
-        Donor e = new Donor();
+        Entry e = new Entry();
         e.setEmail("test@example.com");
-        e.setAddress1("");
-        e.setAddress2("");
-        e.setCity("");
-        e.setState("");
-        e.setZipCode("");
-        e.setFirstName("Generous");
-        e.setLastName("Donor");
-        this.donorsRepository.save(e);
+        e.setName("Test user");
+        this.entryRepository.save(e);
         assertNotNull(e.getId());
     }
 
 
     @Test
     public void canFetchAndSave() {
-        Donor e = new Donor();
-        e.setEmail("test@example.com");
-        e.setFirstName("Generous");
-        e.setLastName("Donor");
-        e.setAddress1("");
-        e.setAddress2("");
-        e.setCity("");
-        e.setState("");
-        e.setZipCode("");
-        this.donorsRepository.save(e);
+        Entry e = new Entry();
+        e.setName("Test user");
+        e.setEmail("test1@example.com");
+        this.entryRepository.save(e);
 
-        this.donorsRepository.findById(e.getId()).ifPresent(entry -> {
+        this.entryRepository.findById(e.getId()).ifPresent(entry -> {
             assertNotNull(entry.getId());
-            assertNotNull(entry.getFirstName());
+            assertNotNull(entry.getName());
             assertNotNull(entry.getEmail());
         });
     }
 
     @Test
     public void throwsIfDuplicateEmailIsSupplied() {
-        Donor e = new Donor();
-        e.setEmail("test@example.com");
-        e.setFirstName("Generous");
-        e.setLastName("Donor");
-        e.setAddress1("");
-        e.setAddress2("");
-        e.setCity("");
-        e.setState("");
-        e.setZipCode("");
-        this.donorsRepository.save(e);
+        Entry e = new Entry();
+        e.setName("Test user");
+        e.setEmail("test1@example.com");
+        this.entryRepository.save(e);
 
-        Donor e2 = new Donor();
-        e.setEmail("test@example.com");
-        e.setFirstName("Generous 2");
-        e.setLastName("Donor");
-        e.setAddress1("");
-        e.setAddress2("");
-        e.setCity("");
-        e.setState("");
-        e.setZipCode("");
+        Entry e2 = new Entry();
+        e2.setName("Test user 2");
+        e2.setEmail("test1@example.com");
 
         assertThrows(DbActionExecutionException.class, () -> {
-            this.donorsRepository.save(e2);
+            this.entryRepository.save(e2);
         });
 
     }
